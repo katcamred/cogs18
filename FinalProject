@@ -1,0 +1,297 @@
+greetings_in = ['hello', 'hi', 'hey', 'whats up', 'greetings']
+greetings_out = ['Hello there!', 'Welcome in!', 'Good morning!','Good to see you', 'Welcome to Kat\'s cafe']
+                
+                 
+check_drink = ['drink', 'beverage', 'coffee', 'thirsty']
+                 
+available_drink = 'Our drink menu is the following: americano, espresso, drip coffee, mocha, latte, tea, chai latte, matcha latte, and hot chocolate'
+                 
+check_food = ['food', 'hungry', 'starving', 'eat', 'eating']
+
+available_food = 'We offer the following food items: pastry, doughnut, muffin, cookie, sandwich, and banana'
+
+whole_menu = ['americano', 'espresso', 'drip coffee', 'mocha', 'latte', 'tea', 'chai latte', 'matcha latte', 'hot chocolate', 'pastry', 'doughnut', 'muffin', 'cookie', 'sandwich', 'banana']                 
+                 
+question_response = 'Sorry, I can\'t answer questions'  
+pay_string = ['pay', 'total', 'credit', 'debit', 'card', 'cash', 'money', 'dollar', 'owe']
+
+import random
+import numpy as np
+
+
+
+def make_lower(input_string):
+    """Make string all lowercase.
+    
+    Parameters
+    ----------
+    input_string: str
+                Input message of the user.
+     
+    Returns
+    -------
+    output: str
+          Input message but now all lowercase.
+    """
+    
+    output = input_string.lower()
+    
+    return output
+
+
+def make_list(input_string):
+    """Make input message easier to process.
+    
+    Parameters
+    ----------
+    input_string: str
+                Input message of the user.
+                
+    Returns
+    --------
+    output: str
+         Input message all lowercase and split up into a list of words. 
+   """
+    # Makes an initial output where input string is made all lowercase       
+    initial_output = make_lower(input_string)
+    
+    # Final output takes the string made lowercase and splits it into a list of string words
+    output = initial_output.split()
+    
+    return output
+
+
+# From A3
+def is_question(input_string):
+    """Determines if input message is a question
+    
+    Parameters
+    ----------
+    input_string: str
+                Input message of the user
+    
+    Returns
+    -------
+    output: bool
+          True if input is a question, False if otherwise
+    """
+    
+    if '?' in input_string:
+        output = True
+        
+    else:
+        output = False
+        
+    return output
+
+# From A3
+def end_chat(input_list):
+    """Determines if input message is meant to stop chat.
+    
+    Parameters
+    ----------
+    input_list: str
+              Input message of the user.
+          
+    Returns
+    --------
+    output: bool
+          True if input is meant to stop chat, False if otherwise.
+    """
+    
+    if 'bye' in input_list:
+        output = True
+        
+    else:
+        output = False
+        
+    return output
+
+
+def what_is(input_string, check_string, output_string):
+    """Gives approriate computer output based on input message.
+    
+    Parameters
+    ----------
+    input_string: str
+                Input message from user.
+    check_string: list of str
+                List of possible user inputs.
+    output_string: str
+                Computer response if input message is in possible list of strings.
+                
+    Returns
+    -------
+    output: bool
+          True if input message is in anticipated possible list of strings.
+    """
+    # Uses aforementioned functions to make input string lowercase and split it into a list of words for easier processing
+    new_string = make_list(input_string)
+    
+    # Loop through words in input_string
+    for i in new_string:
+        if i in check_string:
+            output = output_string
+            
+            return output
+
+        
+def order_item(input_string):
+    """Determine if input is an order.
+    
+    Parameters
+    ----------
+    input_string: str
+                Input message from user.
+     
+    Returns
+    -------
+    output: str
+           Acknowledgement of the user's order.
+    """
+    # Uses aforementioned functions to make input string lowercase and split it into a list of words for easier processing
+    new_string = make_list(input_string)
+    
+    # Loop through words in input_string
+    for i in new_string:
+        # Takes the word from input_string if it is in the menu
+        if i in whole_menu:
+            # Returns a statement with the menu item from the input
+            output = 'Perfect! I\'ll get that ' + i + ' right up for you!'
+            
+            return output
+        
+# Determines if input is a message to pay for an order, if so, it calculates the price of the order by using the length of the input message   
+def order_total(input_string):
+    """Charge the customer (user).
+    
+    Parameters
+    ----------
+    input_string: str
+                Input message from the user.
+     
+    Returns
+    -------
+    output: str
+          A string stating how much the user's order will be.
+    """
+    # Uses aforementioned functions to make input string lowercase and split it into a list of words for easier processing
+    new_string = make_list(input_string)
+    
+    # Loop through words in input_string
+    for i in new_string:
+        # Checks if the word from the input is in pay_string, if it is then it continues
+        if i in pay_string:
+            
+            # Generates a float output with the length of the string and divides it by 2
+            float_output = (len(new_string) / 2)
+            
+            # Final output adds 2 strings to make a statement and converts float output into a string
+            output = 'That will be ' + (str(float_output)) + ' dollars.'
+            
+            return output
+        
+        
+def greeting(input_string):
+    """Greets when greeted
+    
+    Parameters
+    ----------
+    input_string: str
+                Input message from user
+    
+    Returns
+    -------
+    output: str
+           Randomly selected greeting response 
+    
+    """
+    # Uses aforementioned functions to make input string lowercase and split it into a list of words for easier processing
+    new_string = make_list(input_string)
+    
+    # Loop through words in input_string to determine if the input is a greeting
+    for i in new_string:
+        if i in greetings_in:
+            output = random.choice(greetings_out)
+            
+            return output
+        
+        
+def is_shout(input_string):
+    """Checks if customer (user) is yelling.
+    
+    Parameters
+    ----------
+    input_string: str
+                Input message from user
+     
+    Returns
+    --------
+    output: bool
+          True if input message contains an exclamation point, False if otherwise.
+    """
+    
+    if '!' in input_string:
+        output = True
+    else:
+        output = False
+        
+    return output
+    
+     
+def barista_bot():
+    """Main function for chatbot"""
+    
+    chat = True
+    while chat:
+        
+        # Get a message input from the user
+        msg = input('You :\t')
+        
+        # Default bot-generated response
+        out_msg = 'I\'m sorry, I don\'t understand :('
+        
+        # Determine if input is a question, if so give appropriate 
+        # response
+        if is_question(msg):
+            out_msg = 'Sorry, I can\'t answer questions'
+            output = out_msg
+         
+        # Determine if input is a "shouting", give appropriate answer if so
+        if is_shout(msg):
+            out_msg = 'Please don\'t yell at me, I might cry'
+            output = out_msg
+        
+        # Check for an end msg
+        # Modified from A3
+        if end_chat(msg):
+            out_msg = 'Goodbye please come again soon!'
+            # Terminate chat if user says bye
+            chat = False
+
+            
+            # Open a list for possible outputs 
+        outs = []
+            
+             # Check if input relates to food/hunger, add a food menu offering if so 
+        outs.append(what_is(msg, check_food, available_food))
+            
+            # Check if input relates to drink/thirst, add a drink menu offering if so
+        outs.append(what_is(msg, check_drink, available_drink))
+            
+            #Determine if input msg is an order, acknowledge order if so
+        outs.append(order_item(msg))
+            
+            # Determine if input msg looks like the customer is ready to pay, add total cost if so
+        outs.append(order_total(msg))
+            
+            # Determine if input is a greeting, if so answer with a randomly selected greeting.
+        outs.append(greeting(msg))
+        
+        # From A3
+        # Select an output from the set of outputs that are not None
+        options = list(filter(None, outs))
+        if options:
+            out_msg = random.choice(options)
+            
+        print('Barista:', out_msg)
